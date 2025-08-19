@@ -6,7 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "dev": "webpack serve --mode development",
-    "deploy": "webpack --mode production"
+    "deploy": "webpack --mode production",
+    "pregh-deploy": "npm run build",
+    "gh-deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,7 @@
   "description": "",
   "devDependencies": {
     "css-loader": "^7.1.2",
+    "gh-pages": "^6.3.0",
     "nodemon": "^3.1.10",
     "sass": "^1.90.0",
     "sass-loader": "^16.0.5",
