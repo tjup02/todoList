@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap');
+// .lxgw-wenkai-tc-regular {
+//   font-family: "LXGW WenKai TC", cursive;
+//   font-weight: 400;
+//   font-style: normal;
+// }
+
+html,body{
+    background: #FFD370;
+}
+.loginPage{
+    display: flex;
+    height: 100vh;
+    
+    .loginImg{
+        max-width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+    }
+}
+.loginRegisterStyle{
+    width: 100%;
+    border: 2px red solid;
+    h4{
+        font-weight: 700;
+        font-family: "LXGW WenKai TC", cursive;
+        font-size: 24px;
+    }
+    .loginInput{
+        height: 43px;
+        padding: 5px;
+        border: none;
+        background: #ffffff;
+        border-radius: 10px;
+        &:focus,&:active{
+            outline: #D87355 2px solid;
+        }
+    }
+}
+.warningTag{
+    color: #D87355;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+button:hover{
+    transition: all .3s ease-in;
+    transform: scale(1.2);
+}
