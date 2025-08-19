@@ -5,6 +5,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
+    publicPath: "/todoList/", // 對應你的 repo 名稱
   },
   module: {
     rules: [
