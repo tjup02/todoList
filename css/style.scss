@@ -20,8 +20,11 @@ html,body{
     }
 }
 .loginRegisterStyle{
+    display: none;
     width: 100%;
-    border: 2px red solid;
+    &.active{
+        display: block;
+    }
     h4{
         font-weight: 700;
         font-family: "LXGW WenKai TC", cursive;
@@ -39,6 +42,7 @@ html,body{
     }
 }
 .warningTag{
+    display: none;
     color: #D87355;
     font-size: 14px;
     font-weight: 700;

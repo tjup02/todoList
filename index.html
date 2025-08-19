@@ -32,9 +32,13 @@
         <section
           class="col d-flex flex-column align-items-center justify-content-center px-4"
         >
-          <img src="./image/logo_lg.png" alt="" class="w-100 mb-4" />
+          <img
+            src="./image/logo_lg.png"
+            alt=""
+            class="d-block d-md-none w-100 mb-4"
+          />
           <!-- 登入填寫區 -->
-          <form action="" id="loginForm" class="loginRegisterStyle">
+          <form action="" id="loginForm" class="loginRegisterStyle active">
             <!-- <img src="./image/logo_lg.png" alt="" class="w-100 mb-4" /> -->
             <h4 class="mb-4 text-center text-md-start">
               最實用的線上代辦事項服務
@@ -71,7 +75,8 @@
             </div>
             <div class="w-100 text-center mt-4">
               <button
-                class="text-dark border-0 bg-transparent fw-bolder px-5 py-2 rounded-3"
+                id="registerBtn"
+                class="loginRegisterBtn text-dark border-0 bg-transparent fw-bolder px-5 py-2 rounded-3"
                 type="button"
               >
                 註冊帳號
@@ -145,7 +150,8 @@
             </div>
             <div class="w-100 text-center mt-4">
               <button
-                class="text-dark border-0 bg-transparent fw-bolder px-5 py-2 rounded-3"
+                id="loginBtn"
+                class="loginRegisterBtn text-dark border-0 bg-transparent fw-bolder px-5 py-2 rounded-3"
                 type="button"
               >
                 登入
@@ -161,6 +167,27 @@
       integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
       crossorigin="anonymous"
     ></script>
-    <script></script>
+    <script>
+      // 註冊登入頁面切換
+      const loginForm = document.querySelector("#loginForm");
+      const registerForm = document.querySelector("#registerForm");
+      const loginRegisterStyle = document.querySelectorAll(
+        ".loginRegisterStyle"
+      );
+      const loginRegisterBtn = document.querySelectorAll(".loginRegisterBtn");
+
+      loginRegisterBtn.forEach((item) => {
+        item.addEventListener("click", (e) => {
+          loginRegisterStyle.forEach((i) => {
+            i.classList.remove("active");
+          });
+          if (e.target.getAttribute("id") === "loginBtn") {
+            loginForm.classList.add("active");
+          } else {
+            registerForm.classList.add("active");
+          }
+        });
+      });
+    </script>
   </body>
 </html>

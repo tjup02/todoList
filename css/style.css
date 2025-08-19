@@ -15,8 +15,11 @@ html, body {
 }
 
 .loginRegisterStyle {
+  display: none;
   width: 100%;
-  border: 2px red solid;
+}
+.loginRegisterStyle.active {
+  display: block;
 }
 .loginRegisterStyle h4 {
   font-weight: 700;
@@ -35,6 +38,7 @@ html, body {
 }
 
 .warningTag {
+  display: none;
   color: #D87355;
   font-size: 14px;
   font-weight: 700;
