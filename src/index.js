@@ -21,3 +21,5 @@ loginRegisterBtn.forEach((item) => {
     }
   });
 });
+
+console.log("Webpack SCSS HMR 測試");

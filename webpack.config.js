@@ -1,11 +1,12 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
-    publicPath: "/todoList/", // 對應你的 repo 名稱
+    publicPath: "/todoList/", // 對應你的 repo 名稱(暫時註解，開發模式再打開)
   },
   module: {
     rules: [
@@ -19,10 +20,21 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/index.html",
+      filename: "index.html",
+    }),
+    new HtmlWebpackPlugin({
+      template: "./src/login.html",
+      filename: "login.html",
+    }),
+  ],
   devServer: {
     static: {
       directory: path.join(__dirname, "dist"),
     },
+    hot: true,
     compress: true,
     port: 9000,
     open: true,

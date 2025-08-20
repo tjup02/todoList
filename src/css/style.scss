@@ -5,8 +5,17 @@
 //   font-style: normal;
 // }
 
+$main-color:#FFD370;
+
+
 html,body{
-    background: #FFD370;
+    &.login{
+        background: $main-color;
+    }
+    &.todoList{
+        min-height: 100vh;
+        background: linear-gradient(172.7deg, $main-color 5.12%, $main-color 53.33%, $main-color 53.44%, #FFFFFF 53.45%, #FFFFFF 94.32%)no-repeat;
+    }
 }
 .loginPage{
     display: flex;
@@ -52,3 +61,6 @@ button:hover{
     transition: all .3s ease-in;
     transform: scale(1.2);
 }
+
+// todoList
+

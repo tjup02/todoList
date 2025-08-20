@@ -1,6 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap");
 html, body {
-  background: #FFD370;
+  background: red;
+}
+html.todoList, body.todoList {
+  background: linear-gradient(172.7deg, #FFD370 5.12%, #FFD370 53.33%, #FFD370 53.44%, #FFFFFF 53.45%, #FFFFFF 94.32%);
 }
 
 .loginPage {
