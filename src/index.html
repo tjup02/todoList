@@ -3,10 +3,325 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>這是todoList首頁</title>
+    <title>todoList首頁</title>
   </head>
   <body class="todoList">
     <!-- 功能主畫面 -->
-    <main class="todoListPage container py-5">fdsa</main>
+    <header
+      class="w-100 d-flex justify-content-between align-items-center py-3 px-4"
+    >
+      <img src="./images/logo_lg.png" alt="" class="logo" />
+      <div class="userWrap d-flex align-items-center">
+        <div class="d-none d-md-block text-dark fw-bolder me-4">
+          王小明的代辦
+        </div>
+        <button type="button" class="text-dark border-0 bg-transparent py-2">
+          登出
+        </button>
+      </div>
+    </header>
+
+    <main class="todoListPage container mt-4 p-2">
+      <!-- 新增代辦事項 -->
+      <section
+        class="w-100 d-flex align-items-center justify-content-between p-1 rounded-3 shadow-lg bg-white"
+      >
+        <input
+          type="text"
+          class="todoInput"
+          name=""
+          placeholder="新增待辦事項"
+          id=""
+        />
+        <button type="button" class="addBtn rounded-3 bg-dark text-white">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </section>
+
+      <!-- 沒有清單時，圖示(沒有內容) -->
+      <section
+        class="w-100 mt-4 overflow-hidden d-flex flex-column align-items-center"
+      >
+        <div class="fs-3 fw-bolder text-dark mt-4 text-center">
+          目前尚無待辦事項
+        </div>
+        <img src="./images/noList.png" alt="" class="noListImg" />
+      </section>
+
+      <!-- 清單列表(有內容) -->
+      <section class="w-100 mt-4 rounded-3 shadow-lg bg-white overflow-hidden">
+        <!-- 清單列表-分類 -->
+        <article class="row p-2">
+          <div class="todoState col active">全部</div>
+          <div class="todoState col">待完成</div>
+          <div class="todoState col">已完成</div>
+        </article>
+
+        <!-- 清單列表-列表 -->
+        <ul class="todoWrap w-100 m-0 py-0 px-4">
+          <li
+            class="todoItem d-flex align-items-center justify-content-between my-2 pb-2"
+          >
+            <div class="d-flex align-items-center w-100">
+              <!-- 尚未打勾 -->
+              <div class="iconNoChk me-2">
+                <i class="fa-regular fa-square"></i>
+              </div>
+              <!-- 已打勾 -->
+              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <!-- 清單項目內容 -->
+              <p class="todoInfo m-0 w-100 pe-3">
+                afsdcaisodvjcsoia;cjDgrasrargawo;gkla'w;kg'l;l,lshxdgbsezrvw;,l;',l;,';,';'
+                ;'.;'.;,l;,l;,l;
+              </p>
+            </div>
+            <!-- 刪除項目按鈕 -->
+            <button type="button" class="iconDel me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+
+          <li
+            class="todoItem d-flex align-items-center justify-content-between my-2 pb-2"
+          >
+            <div class="d-flex align-items-center w-100">
+              <!-- 尚未打勾 -->
+              <div class="iconNoChk me-2">
+                <i class="fa-regular fa-square"></i>
+              </div>
+              <!-- 已打勾 -->
+              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <!-- 清單項目內容 -->
+              <p class="todoInfo m-0 w-100 pe-3">
+                afsdcaisodvjcsoia;cjDgrasrargawo;gkla'w;kg'l;l,lshxdgbsezrvw;,l;',l;,';,';'
+                ;'.;'.;,l;,l;,l;
+              </p>
+            </div>
+            <!-- 刪除項目按鈕 -->
+            <button type="button" class="iconDel me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+          <li
+            class="todoItem d-flex align-items-center justify-content-between my-2 pb-2"
+          >
+            <div class="d-flex align-items-center w-100">
+              <!-- 尚未打勾 -->
+              <div class="iconNoChk me-2">
+                <i class="fa-regular fa-square"></i>
+              </div>
+              <!-- 已打勾 -->
+              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <!-- 清單項目內容 -->
+              <p class="todoInfo m-0 w-100 pe-3">
+                afsdcaisodvjcsoia;cjDgrasrargawo;gkla'w;kg'l;l,lshxdgbsezrvw;,l;',l;,';,';'
+                ;'.;'.;,l;,l;,l;
+              </p>
+            </div>
+            <!-- 刪除項目按鈕 -->
+            <button type="button" class="iconDel me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+          <li
+            class="todoItem d-flex align-items-center justify-content-between my-2 pb-2"
+          >
+            <div class="d-flex align-items-center w-100">
+              <!-- 尚未打勾 -->
+              <div class="iconNoChk me-2">
+                <i class="fa-regular fa-square"></i>
+              </div>
+              <!-- 已打勾 -->
+              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <!-- 清單項目內容 -->
+              <p class="todoInfo m-0 w-100 pe-3">
+                afsdcaisodvjcsoia;cjDgrasrargawo;gkla'w;kg'l;l,lshxdgbsezrvw;,l;',l;,';,';'
+                ;'.;'.;,l;,l;,l;
+              </p>
+            </div>
+            <!-- 刪除項目按鈕 -->
+            <button type="button" class="iconDel me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+          <li
+            class="todoItem d-flex align-items-center justify-content-between my-2 pb-2"
+          >
+            <div class="d-flex align-items-center w-100">
+              <!-- 尚未打勾 -->
+              <div class="iconNoChk me-2">
+                <i class="fa-regular fa-square"></i>
+              </div>
+              <!-- 已打勾 -->
+              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <!-- 清單項目內容 -->
+              <p class="todoInfo m-0 w-100 pe-3">
+                afsdcaisodvjcsoia;cjDgrasrargawo;gkla'w;kg'l;l,lshxdgbsezrvw;,l;',l;,';,';'
+                ;'.;'.;,l;,l;,l;
+              </p>
+            </div>
+            <!-- 刪除項目按鈕 -->
+            <button type="button" class="iconDel me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+          <li
+            class="todoItem d-flex align-items-center justify-content-between my-2 pb-2"
+          >
+            <div class="d-flex align-items-center w-100">
+              <!-- 尚未打勾 -->
+              <div class="iconNoChk me-2">
+                <i class="fa-regular fa-square"></i>
+              </div>
+              <!-- 已打勾 -->
+              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <!-- 清單項目內容 -->
+              <p class="todoInfo m-0 w-100 pe-3">
+                afsdcaisodvjcsoia;cjDgrasrargawo;gkla'w;kg'l;l,lshxdgbsezrvw;,l;',l;,';,';'
+                ;'.;'.;,l;,l;,l;
+              </p>
+            </div>
+            <!-- 刪除項目按鈕 -->
+            <button type="button" class="iconDel me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+          <li
+            class="todoItem d-flex align-items-center justify-content-between my-2 pb-2"
+          >
+            <div class="d-flex align-items-center w-100">
+              <!-- 尚未打勾 -->
+              <div class="iconNoChk me-2">
+                <i class="fa-regular fa-square"></i>
+              </div>
+              <!-- 已打勾 -->
+              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <!-- 清單項目內容 -->
+              <p class="todoInfo m-0 w-100 pe-3">
+                afsdcaisodvjcsoia;cjDgrasrargawo;gkla'w;kg'l;l,lshxdgbsezrvw;,l;',l;,';,';'
+                ;'.;'.;,l;,l;,l;
+              </p>
+            </div>
+            <!-- 刪除項目按鈕 -->
+            <button type="button" class="iconDel me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+          <li
+            class="todoItem d-flex align-items-center justify-content-between my-2 pb-2"
+          >
+            <div class="d-flex align-items-center w-100">
+              <!-- 尚未打勾 -->
+              <div class="iconNoChk me-2">
+                <i class="fa-regular fa-square"></i>
+              </div>
+              <!-- 已打勾 -->
+              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <!-- 清單項目內容 -->
+              <p class="todoInfo m-0 w-100 pe-3">
+                afsdcaisodvjcsoia;cjDgrasrargawo;gkla'w;kg'l;l,lshxdgbsezrvw;,l;',l;,';,';'
+                ;'.;'.;,l;,l;,l;
+              </p>
+            </div>
+            <!-- 刪除項目按鈕 -->
+            <button type="button" class="iconDel me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+          <li
+            class="todoItem d-flex align-items-center justify-content-between my-2 pb-2"
+          >
+            <div class="d-flex align-items-center w-100">
+              <!-- 尚未打勾 -->
+              <div class="iconNoChk me-2">
+                <i class="fa-regular fa-square"></i>
+              </div>
+              <!-- 已打勾 -->
+              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <!-- 清單項目內容 -->
+              <p class="todoInfo m-0 w-100 pe-3">
+                afsdcaisodvjcsoia;cjDgrasrargawo;gkla'w;kg'l;l,lshxdgbsezrvw;,l;',l;,';,';'
+                ;'.;'.;,l;,l;,l;
+              </p>
+            </div>
+            <!-- 刪除項目按鈕 -->
+            <button type="button" class="iconDel me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+          <li
+            class="todoItem d-flex align-items-center justify-content-between my-2 pb-2"
+          >
+            <div class="d-flex align-items-center w-100">
+              <!-- 尚未打勾 -->
+              <div class="iconNoChk me-2">
+                <i class="fa-regular fa-square"></i>
+              </div>
+              <!-- 已打勾 -->
+              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <!-- 清單項目內容 -->
+              <p class="todoInfo m-0 w-100 pe-3">
+                afsdcaisodvjcsoia;cjDgrasrargawo;gkla'w;kg'l;l,lshxdgbsezrvw;,l;',l;,';,';'
+                ;'.;'.;,l;,l;,l;
+              </p>
+            </div>
+            <!-- 刪除項目按鈕 -->
+            <button type="button" class="iconDel me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+          <li
+            class="todoItem d-flex align-items-center justify-content-between my-2 pb-2"
+          >
+            <div class="d-flex align-items-center w-100">
+              <!-- 尚未打勾 -->
+              <div class="iconNoChk me-2">
+                <i class="fa-regular fa-square"></i>
+              </div>
+              <!-- 已打勾 -->
+              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <!-- 清單項目內容 -->
+              <p class="todoInfo m-0 w-100 pe-3">
+                afsdcaisodvjcsoia;cjDgrasrargawo;gkla'w;kg'l;l,lshxdgbsezrvw;,l;',l;,';,';'
+                ;'.;'.;,l;,l;,l;
+              </p>
+            </div>
+            <!-- 刪除項目按鈕 -->
+            <button type="button" class="iconDel me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+          <li
+            class="todoItem d-flex align-items-center justify-content-between my-2 pb-2"
+          >
+            <div class="d-flex align-items-center w-100">
+              <!-- 尚未打勾 -->
+              <div class="iconNoChk me-2">
+                <i class="fa-regular fa-square"></i>
+              </div>
+              <!-- 已打勾 -->
+              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <!-- 清單項目內容 -->
+              <p class="todoInfo m-0 w-100 pe-3">
+                afsdcaisodvjcsoia;cjDgrasrargawo;gkla'w;kg'l;l,lshxdgbsezrvw;,l;',l;,';,';'
+                ;'.;'.;,l;,l;,l;
+              </p>
+            </div>
+            <!-- 刪除項目按鈕 -->
+            <button type="button" class="iconDel me-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+        </ul>
+
+        <!-- 欄尾 -->
+        <article
+          class="todoBottom w-100 d-flex align-items-center justify-content-between px-4 py-3"
+        >
+          <div class="text-dark fw-bold">5 個待完成項目</div>
+          <button class="finishDelBtn" type="button">清除已完成項目</button>
+        </article>
+      </section>
+    </main>
   </body>
 </html>
