@@ -62,11 +62,11 @@
             </div>
             <div class="w-100 text-center mt-4">
               <button
-                id="registerBtn"
+                id="goRegisterBtn"
                 class="loginRegisterBtn text-dark border-0 bg-transparent fw-bolder px-5 py-2"
                 type="button"
               >
-                註冊帳號
+                前往註冊帳號
               </button>
             </div>
           </form>
@@ -75,39 +75,36 @@
           <form action="" id="registerForm" class="loginRegisterStyle">
             <!-- <img src="./image/logo_lg.png" alt="" class="w-100 mb-4" /> -->
             <h4 class="mb-4 text-center text-md-start">註冊帳號</h4>
-            <!-- 註冊信箱 -->
-            <div class="w-100">
-              <label class="w-100 mb-1 fw-bold" for="registerEmail"
-                >Email</label
-              >
-              <input
-                id="registerEmail"
-                class="w-100 loginInput"
-                type="email"
-                placeholder="請輸入Email"
-              />
-              <p class="warningTag mt-1">此欄位不可為空</p>
-            </div>
             <!-- 註冊暱稱 -->
-            <div class="w-100 mt-3">
+            <div id="registerNickname" class="w-100 mt-3">
               <label class="w-100 mb-1 fw-bold" for="registerNickname"
                 >暱稱</label
               >
               <input
-                id="registerNickname"
                 class="w-100 loginInput"
                 type="text"
                 placeholder="輸入暱稱"
               />
               <p class="warningTag mt-1">此欄位不可為空</p>
             </div>
+            <!-- 註冊信箱 -->
+            <div id="registerEmail" class="w-100">
+              <label class="w-100 mb-1 fw-bold" for="registerEmail"
+                >Email</label
+              >
+              <input
+                class="w-100 loginInput"
+                type="email"
+                placeholder="請輸入Email"
+              />
+              <p class="warningTag mt-1">此欄位不可為空</p>
+            </div>
             <!-- 註冊密碼 -->
-            <div class="w-100 mt-3">
+            <div id="registerPassword" class="w-100 mt-3">
               <label class="w-100 mb-1 fw-bold" for="registerPassword"
                 >密碼</label
               >
               <input
-                id="registerPassword"
                 class="w-100 loginInput"
                 type="password"
                 placeholder="不得小於6碼"
@@ -115,12 +112,11 @@
               <p class="warningTag mt-1">此欄位不可為空</p>
             </div>
             <!-- 註冊確認密碼 -->
-            <div class="w-100 mt-3">
+            <div id="registerCheckPassword" class="w-100 mt-3">
               <label class="w-100 mb-1 fw-bold" for="registerCheckPassword"
                 >確認密碼</label
               >
               <input
-                id="registerCheckPassword"
                 class="w-100 loginInput"
                 type="password"
                 placeholder="再次輸入密碼"
@@ -129,6 +125,7 @@
             </div>
             <div class="w-100 text-center mt-4">
               <button
+                id="registerBtn"
                 class="text-white fw-bold bg-dark px-5 py-2 rounded-3"
                 type="button"
               >
@@ -137,7 +134,7 @@
             </div>
             <div class="w-100 text-center mt-4">
               <button
-                id="loginBtn"
+                id="toLoginBtn"
                 class="loginRegisterBtn text-dark border-0 bg-transparent fw-bolder px-5 py-2"
                 type="button"
               >
