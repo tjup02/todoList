@@ -1,10 +1,11 @@
 import "./common.js";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const loginForm = document.querySelector("#loginForm");
 const registerForm = document.querySelector("#registerForm");
-const loginRegisterStyle = document.querySelectorAll(".loginRegisterStyle");
-const loginRegisterBtn = document.querySelectorAll(".loginRegisterBtn");
+const loginRegisterStyle = document.querySelectorAll(".loginRegisterStyle"); //登入和註冊表單
+const loginRegisterBtn = document.querySelectorAll(".loginRegisterBtn"); //登入和註冊前往按鈕
 
 const registerBtn = document.querySelector("#registerBtn"); //確認註冊按鈕
 
@@ -14,6 +15,7 @@ loginRegisterBtn.forEach((item) => {
     loginRegisterStyle.forEach((i) => {
       i.classList.remove("active");
     });
+
     if (e.target.getAttribute("id") === "loginBtn") {
       loginForm.classList.add("active");
     } else {
@@ -26,9 +28,9 @@ loginRegisterBtn.forEach((item) => {
 const apiUrl = "https://todoo.5xcamp.us"; // API來源:
 
 // 註冊
-const register = async (email, nickname, password) => {
+const register = async (nickname, email, password) => {
   try {
-    const res = axios.post(apiUrl, {
+    const res = await axios.post(`${apiUrl}/users`, {
       user: {
         email: email,
         nickname: nickname,
@@ -36,8 +38,19 @@ const register = async (email, nickname, password) => {
       },
     });
     console.log(res.data);
+    Swal.fire({
+      title: "成功註冊",
+      icon: "success",
+      confirmButtonColor: "#FFD370",
+    });
   } catch (error) {
     console.log(error.response);
+    Swal.fire({
+      title: "註冊失敗",
+      text: `${error.response.data.error}`,
+      icon: "error",
+      confirmButtonColor: "#FFD370",
+    });
   }
 };
 
@@ -50,8 +63,11 @@ registerBtn.addEventListener("click", (e) => {
     { id: "registerCheckPassword", name: "確認密碼" },
   ];
 
+  // 設定flag(用來檢查所有條件是否全部符合規則，true會中斷執行)
+  let hasErrorAll = false;
+
   // 檢查是否完整填寫註冊表單
-  const fieldsValueChk = fields.forEach((item, index) => {
+  fields.forEach((item, index) => {
     const fieldsWarningTag = document.querySelector(`#${item.id} .warningTag`);
     const fieldsInputValue = document
       .querySelector(`#${item.id} input`)
@@ -100,18 +116,23 @@ registerBtn.addEventListener("click", (e) => {
       }
     }
 
-    // 回傳false時(符合條件)，拿掉警示tag
+    // hasError回傳false時(符合條件)，拿掉警示tag
     if (!hasError) {
       fieldsWarningTag.textContent = "";
       fieldsWarningTag.classList.remove("active");
+    } else {
+      //如果有任一欄位不符合規則，將hasErrorAll標為true，註冊表單將不會送出
+      hasErrorAll = true;
     }
 
     // 將符合規則的值丟到fields的inputValue屬性
     fields[index].inputValue = fieldsInputValue;
-
-    return hasError; //回傳flag
   });
 
+  // 如果有任一欄位不符合規則，停止執行。
+  if (hasErrorAll) return;
+
+  // 送出註冊表單
   register(fields[0].inputValue, fields[1].inputValue, fields[2].inputValue);
 });
 
