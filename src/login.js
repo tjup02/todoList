@@ -2,30 +2,30 @@ import "./common.js";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+const apiUrl = "https://todoo.5xcamp.us"; // API來源:
 const loginForm = document.querySelector("#loginForm");
 const registerForm = document.querySelector("#registerForm");
 const loginRegisterStyle = document.querySelectorAll(".loginRegisterStyle"); //登入和註冊表單
 const loginRegisterBtn = document.querySelectorAll(".loginRegisterBtn"); //登入和註冊前往按鈕
 
 const registerBtn = document.querySelector("#registerBtn"); //確認註冊按鈕
+const loginBtn = document.querySelector("#loginBtn"); //確認登入按鈕
 
 // 註冊登入頁面切換
 loginRegisterBtn.forEach((item) => {
+  // 點選進入頁面的按鈕(前往登入/登出)
   item.addEventListener("click", (e) => {
     loginRegisterStyle.forEach((i) => {
+      console.log(e.target.getAttribute("id"));
       i.classList.remove("active");
+      if (e.target.getAttribute("id") === "toLoginBtn") {
+        loginForm.classList.add("active");
+      } else {
+        registerForm.classList.add("active");
+      }
     });
-
-    if (e.target.getAttribute("id") === "loginBtn") {
-      loginForm.classList.add("active");
-    } else {
-      registerForm.classList.add("active");
-    }
   });
 });
-
-// 接API
-const apiUrl = "https://todoo.5xcamp.us"; // API來源:
 
 // 註冊
 const register = async (nickname, email, password) => {
@@ -37,11 +37,15 @@ const register = async (nickname, email, password) => {
         password: password,
       },
     });
-    console.log(res.data);
+    // console.log(res.data);
     Swal.fire({
-      title: "成功註冊",
+      title: `${res.data.message}`,
       icon: "success",
+      text: `點擊確認後，請重新登入`,
       confirmButtonColor: "#FFD370",
+    }).then(() => {
+      // SweetAlert 關閉後再刷新頁面
+      location.reload();
     });
   } catch (error) {
     console.log(error.response);
@@ -137,16 +141,51 @@ registerBtn.addEventListener("click", (e) => {
 });
 
 // 登入API
-async function login(email, password) {
+const login = async (email, password) => {
   try {
-    const res = axios.get(apiUrl, {
+    const res = await axios.post(`${apiUrl}/users/sign_in`, {
       user: {
         email: email,
         password: password,
       },
     });
-    console.log(res);
+    // console.log(res.data);
+    //axios預設登入成功後取得token，且後續動作攜帶token
+    // axios.defaults.headers.common["Authorization"] = res.headers.authorization;
+
+    // 儲存token和nickname
+    localStorage.setItem("token", res.headers.authorization);
+    localStorage.setItem("nickname", res.data.nickname);
+
+    // 標記為此次進入主頁方式為"登入轉跳"
+    sessionStorage.setItem("justLoggedIn", "true");
+
+    // 自動跳轉到主頁
+    window.location.href = "index.html";
   } catch (error) {
-    console.log(error);
+    // console.log(error.response.data);
+    Swal.fire({
+      title: `${error.response.data.message}`,
+      text: `註冊信箱或密碼輸入錯誤`,
+      icon: "error",
+      confirmButtonColor: "#FFD370",
+    });
   }
-}
+};
+
+// 送出登入表單
+loginBtn.addEventListener("click", (e) => {
+  const loginEmailValue = document.querySelector("#loginEmail").value;
+  const loginPasswordValue = document.querySelector("#loginPassword").value;
+
+  if (!loginEmailValue || !loginPasswordValue) {
+    Swal.fire({
+      title: "註冊失敗",
+      text: `請輸入註冊的Email和密碼`,
+      icon: "warning",
+      confirmButtonColor: "#FFD370",
+    });
+  } else {
+    login(loginEmailValue, loginPasswordValue);
+  }
+});
