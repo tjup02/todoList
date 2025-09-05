@@ -98,11 +98,11 @@ const todosListAPI = async () => {
           <li id="${currentValue.id}" class=" todoItem d-flex align-items-center justify-content-between my-2 pb-2">
             <div class="d-flex align-items-center w-100">
               <!-- 尚未打勾 -->
-              <div class="iconNoChk me-2">
+              <div class="finishBtn iconNoChk me-2">
                 <i class="fa-regular fa-square"></i>
               </div>
               <!-- 已打勾 -->
-              <div class="iconChk me-2"><i class="fa-solid fa-check"></i></div>
+              <div class="finishBtn iconChk me-2"><i class="fa-solid fa-check"></i></div>
               <!-- 清單項目內容 -->
               <input class="todoInfo w-100 me-5 pe-3 " type="text" value="${currentValue.content}" readonly>
             </div>
@@ -189,7 +189,38 @@ const editTodos = async (Id, content) => {
     });
   }
 };
-// 修改/刪除todos功能
+
+// 刪除todos API
+const delTodos = async (Id, content) => {
+  try {
+    const res = await axios.delete(`${apiUrl}/todos/${Id}`);
+    Swal.fire({
+      title: res.data.message,
+      text: content,
+      icon: "success",
+      confirmButtonColor: "#FFD370",
+    });
+  } catch (error) {
+    Swal.fire({
+      title: error.response.data.message,
+      text: content,
+      icon: "error",
+      confirmButtonColor: "#FFD370",
+    });
+  }
+};
+
+// todos 完成切換API
+const todosToggle = async (id) => {
+  try {
+    const res = await axios.patch(`${apiUrl}/todos/${id}/toggle`);
+    console.log(res);
+  } catch (error) {
+    console.log(error.response.data.message);
+  }
+};
+
+// 修改/刪除/完成切換todos功能
 todoWrap.addEventListener("click", (e) => {
   //找清單項目容器
   const todoItem = e.target.closest(".todoItem");
@@ -201,7 +232,7 @@ todoWrap.addEventListener("click", (e) => {
   // 原始input的value值
   let originalInputValue = "";
 
-  // 如果點擊編輯按鈕
+  // 如果點擊編輯按鈕(修改功能)
   if (e.target.closest(".iconEdit")) {
     originalInputValue = itemInput.value; //存取原始input的value值
     itemInput.removeAttribute("readonly"); //輸入框解除唯讀模式
@@ -223,7 +254,6 @@ todoWrap.addEventListener("click", (e) => {
         denyButtonColor: "#9F9A91",
         cancelButtonColor: "#9F9A91",
       }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
           editTodos(todoItem.id, itemInput.value.trim()); //編輯內容存入後端
         } else if (result.isDenied) {
@@ -265,6 +295,26 @@ todoWrap.addEventListener("click", (e) => {
       }
     });
   }
-});
 
-// 刪除todos功能
+  // 如果點擊刪除按鈕(刪除功能)
+  if (e.target.closest(".iconDel")) {
+    //
+    Swal.fire({
+      title: "是否確認刪除",
+      text: itemInput.value,
+      showCancelButton: true,
+      confirmButtonText: "刪除",
+      cancelButtonText: `取消`,
+      confirmButtonColor: "#FFD370",
+      cancelButtonColor: "#9F9A91",
+    })
+      .then(() => delTodos(todoItem.id, itemInput.value))
+      .then(() => todosListAPI());
+  }
+
+  // 完成切換功能
+  if (e.target.closest(".finishBtn")) {
+    todoItem.classList.toggle("active");
+    todosToggle(todoItem.id);
+  }
+});
