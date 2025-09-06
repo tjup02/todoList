@@ -7,10 +7,17 @@ const logoutBtn = document.querySelector("#logoutBtn");
 const noList = document.querySelector("#noList");
 const hasList = document.querySelector("#hasList");
 const todoWrap = document.querySelector("#todoWrap");
+const todoState = document.querySelectorAll(".todoState");
+
+const allList = document.querySelector("#allList");
+const notYetList = document.querySelector("#notYetList");
+const isFinishList = document.querySelector("#isFinishList");
+const countNotYet = document.querySelector("#countNotYet");
 
 const addBtn = document.querySelector("#addBtn");
 const todoInput = document.querySelector("#todoInput");
 const apiUrl = "https://todoo.5xcamp.us"; // API來源:
+let list; //API抓出來的資料
 
 // 載入DOM後執行
 window.addEventListener("DOMContentLoaded", () => {
@@ -44,6 +51,34 @@ window.addEventListener("DOMContentLoaded", () => {
   todosListAPI();
 });
 
+// todos列表API
+const todosListAPI = async () => {
+  try {
+    const res = await axios.get(`${apiUrl}/todos`);
+
+    list = res.data.todos;
+    // 根據載入的清單有無內容，顯示指定內容
+    if (list.length === 0) {
+      noList.classList.add("active");
+      hasList.classList.remove("active");
+    } else {
+      hasList.classList.add("active");
+      noList.classList.remove("active");
+    }
+
+    renderData();
+  } catch (error) {
+    console.log(error.response.data);
+
+    Swal.fire({
+      title: `新增失敗`,
+      text: error.response.data.message,
+      icon: "error",
+      confirmButtonColor: "#FFD370",
+    });
+  }
+};
+
 // 登出API
 const logout = async () => {
   try {
@@ -71,31 +106,87 @@ const logout = async () => {
   }
 };
 
+// 修改todos API
+const editTodos = async (Id, content) => {
+  try {
+    const res = await axios.put(`${apiUrl}/todos/${Id}`, {
+      todo: {
+        content: content,
+      },
+    });
+
+    // 即時更新清單
+    const editItem = list.find((item) => item.id === Id); //找出指定id值的物件
+    editItem.content = content;
+    renderData();
+
+    Swal.fire({
+      title: res.data.message,
+      text: content,
+      icon: "success",
+      confirmButtonColor: "#FFD370",
+    });
+  } catch (error) {
+    Swal.fire({
+      title: error.response.data.message,
+      icon: "error",
+      confirmButtonColor: "#FFD370",
+    });
+  }
+};
+
+// 刪除todos API
+const delTodos = async (Id, content) => {
+  try {
+    const res = await axios.delete(`${apiUrl}/todos/${Id}`);
+
+    // 即時更新清單
+    list = list.filter((item) => item.id !== Id);
+    renderData();
+    Swal.fire({
+      title: res.data.message,
+      text: content,
+      icon: "success",
+      confirmButtonColor: "#FFD370",
+    });
+  } catch (error) {
+    Swal.fire({
+      title: error.response.data.message,
+      text: content,
+      icon: "error",
+      confirmButtonColor: "#FFD370",
+    });
+  }
+};
+
+// todos 完成切換API
+const todosToggle = async (Id) => {
+  try {
+    const res = await axios.patch(`${apiUrl}/todos/${Id}/toggle`);
+
+    // 即時更新清單
+    const toggleItem = list.find((item) => item.id === Id); //找出指定id值的物件
+    toggleItem.completed_at = res.data.completed_at;
+    renderData();
+  } catch (error) {
+    console.log(error.response.data.message);
+  }
+};
+
 // 登出按鈕
 logoutBtn.addEventListener("click", () => {
   logout();
 });
 
-// todos列表API
-const todosListAPI = async () => {
-  const res = await axios.get(`${apiUrl}/todos`);
-
-  const list = res.data.todos;
-  // 根據載入的清單有無內容，顯示指定內容
-  if (list.length === 0) {
-    noList.classList.add("active");
-    hasList.classList.remove("active");
-  } else {
-    hasList.classList.add("active");
-    noList.classList.remove("active");
-  }
-
+function dataState(data) {
   // 列出清單
-  const html = list.reduce((accumulator, currentValue) => {
+  const html = data.reduce((accumulator, currentValue) => {
     return (
       accumulator +
       `
-          <li id="${currentValue.id}" class=" todoItem d-flex align-items-center justify-content-between my-2 pb-2">
+          <li id="${currentValue.id}" class="${
+        currentValue.completed_at ? "active" : ""
+      }  todoItem d-flex align-items-center justify-content-between my-2 pb-2">
             <div class="d-flex align-items-center w-100">
               <!-- 尚未打勾 -->
               <div class="finishBtn iconNoChk me-2">
@@ -104,7 +195,9 @@ const todosListAPI = async () => {
               <!-- 已打勾 -->
               <div class="finishBtn iconChk me-2"><i class="fa-solid fa-check"></i></div>
               <!-- 清單項目內容 -->
-              <input class="todoInfo w-100 me-5 pe-3 " type="text" value="${currentValue.content}" readonly>
+              <input class="todoInfo w-100 me-5 pe-3 " type="text" value="${
+                currentValue.content
+              }" readonly>
             </div>
             <!-- 編輯項目按鈕 -->
             <button type="button" class="iconEdit me-2">
@@ -119,7 +212,41 @@ const todosListAPI = async () => {
   }, "");
 
   todoWrap.innerHTML = html;
-};
+}
+// 渲染資料
+function renderData() {
+  // 篩選"待完成"的項目
+  const notYetData = list.filter(
+    (item) => item.completed_at === null || !item.completed_at
+  );
+  countNotYet.textContent = `${notYetData.length} 個待完成項目`;
+
+  if (allList.classList.contains("active")) {
+    dataState(list);
+  } else if (notYetList.classList.contains("active")) {
+    dataState(notYetData);
+  } else if (isFinishList.classList.contains("active")) {
+    // 篩選"已完成"的項目
+    const isFinishData = list.filter(
+      (item) => item.completed_at !== null && item.completed_at
+    );
+    dataState(isFinishData);
+  } else {
+    return;
+  }
+}
+
+// 切換頁面(全部、待完成、已完成)
+todoState.forEach((item) => {
+  item.addEventListener("click", (e) => {
+    todoState.forEach((i) => {
+      if (i.classList.contains("active")) i.classList.remove("active");
+    });
+    e.target.classList.add("active");
+
+    renderData();
+  });
+});
 
 // 新增todosAPI
 const addTodos = async (content) => {
@@ -132,13 +259,15 @@ const addTodos = async (content) => {
     // console.log(res);
 
     // 即時更新清單
-    todosListAPI();
+    list.push(res.data);
+    renderData();
+    console.log(res.data);
 
     Swal.fire({
       title: `新增成功`,
       text: content,
       icon: "success",
-      timer: 2000, // 2000 毫秒後自動關閉
+      timer: 1000, // 2000 毫秒後自動關閉
       showConfirmButton: false, // 不顯示「確定」按鈕
     });
   } catch (error) {
@@ -166,59 +295,6 @@ todoInput.addEventListener("keydown", (e) => {
     addBtn.click(); // 觸發按鈕的 click 事件
   }
 });
-
-// 修改todos API
-const editTodos = async (Id, content) => {
-  try {
-    const res = await axios.put(`${apiUrl}/todos/${Id}`, {
-      todo: {
-        content: content,
-      },
-    });
-    Swal.fire({
-      title: res.data.message,
-      text: content,
-      icon: "success",
-      confirmButtonColor: "#FFD370",
-    });
-  } catch (error) {
-    Swal.fire({
-      title: error.response.data.message,
-      icon: "error",
-      confirmButtonColor: "#FFD370",
-    });
-  }
-};
-
-// 刪除todos API
-const delTodos = async (Id, content) => {
-  try {
-    const res = await axios.delete(`${apiUrl}/todos/${Id}`);
-    Swal.fire({
-      title: res.data.message,
-      text: content,
-      icon: "success",
-      confirmButtonColor: "#FFD370",
-    });
-  } catch (error) {
-    Swal.fire({
-      title: error.response.data.message,
-      text: content,
-      icon: "error",
-      confirmButtonColor: "#FFD370",
-    });
-  }
-};
-
-// todos 完成切換API
-const todosToggle = async (id) => {
-  try {
-    const res = await axios.patch(`${apiUrl}/todos/${id}/toggle`);
-    console.log(res);
-  } catch (error) {
-    console.log(error.response.data.message);
-  }
-};
 
 // 修改/刪除/完成切換todos功能
 todoWrap.addEventListener("click", (e) => {
@@ -307,9 +383,11 @@ todoWrap.addEventListener("click", (e) => {
       cancelButtonText: `取消`,
       confirmButtonColor: "#FFD370",
       cancelButtonColor: "#9F9A91",
-    })
-      .then(() => delTodos(todoItem.id, itemInput.value))
-      .then(() => todosListAPI());
+    }).then((result) => {
+      if (result.isConfirmed) {
+        return delTodos(todoItem.id, itemInput.value);
+      }
+    });
   }
 
   // 完成切換功能
