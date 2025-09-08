@@ -428,9 +428,8 @@ finishDelBtn.addEventListener("click", async (e) => {
     cancelButtonColor: "#9F9A91",
   });
 
-  const delIPromises = isFinishData.map((item) => delTodos(item.id)); //回傳多個刪除行為Promise組成的陣列
-
   if (result.isConfirmed) {
+    const delIPromises = isFinishData.map((item) => delTodos(item.id)); //回傳多個刪除行為Promise組成的陣列
     await Promise.all(delIPromises); //所有刪除Promise可正確執行才會執行下一步(彈窗)
     Swal.fire({
       title: "成功刪除",
